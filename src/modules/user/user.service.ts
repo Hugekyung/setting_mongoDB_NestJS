@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from 'src/database/schema/user.schema';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UserDto } from './dto/find-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
@@ -16,8 +17,20 @@ export class UserService {
     }
 
     // 2. 전체 조회
-    async findAll(): Promise<User[]> {
-        return this.userModel.find().exec();
+    async findAll(): Promise<UserDto[]> {
+        const users = await this.userModel
+            .find({}, { name: 1, email: 1, age: 1, roles: 1 })
+            .lean()
+            .exec();
+        const newUsers: UserDto[] = users.map((user) => {
+            return {
+                name: user.name,
+                email: user.email,
+                age: user.age,
+                roles: user.roles,
+            };
+        });
+        return newUsers;
     }
 
     // 3. 단건 조회

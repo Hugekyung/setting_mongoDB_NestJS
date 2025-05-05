@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema } from './database/schema/user.schema';
 import { PostSchema } from './database/schema/post.schema';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { PostSchema } from './database/schema/post.schema';
       { name: 'User', schema: UserSchema },
       { name: 'Post', schema: PostSchema },
     ]),
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

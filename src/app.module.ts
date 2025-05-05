@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema } from './database/schema/user.schema';
 import { PostSchema } from './database/schema/post.schema';
 import { UserModule } from './modules/user/user.module';
+import { ChatModule } from './modules/chat/chat.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { UserModule } from './modules/user/user.module';
       { name: 'Post', schema: PostSchema },
     ]),
     UserModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService],
